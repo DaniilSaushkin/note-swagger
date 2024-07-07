@@ -1,22 +1,22 @@
 ﻿namespace note_swagger.api.DTO
 {
     /// <summary>
-    /// Модель пункта задачи.
+    /// Model of item
     /// </summary>
     public sealed class TodoItem
     {
         /// <summary>
-        /// Идентификатор пункта.
+        /// Identifier of item
         /// </summary>
         public int ID { get; set; }
 
         /// <summary>
-        /// Наименование пункта.
+        /// Name of item
         /// </summary>
         public required string Name { get; set; }
 
         /// <summary>
-        /// Описание задачи.
+        /// Description of item
         /// </summary>
         public string? Description { get; set; }
     }

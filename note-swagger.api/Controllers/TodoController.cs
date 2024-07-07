@@ -6,14 +6,14 @@ using note_swagger.api.Repository;
 namespace note_swagger.api.Controllers
 {
     /// <summary>
-    /// Контроллер для Todo.
+    /// Todo controller for working with TodoItems
     /// </summary>
     public class TodoController : Controller
     {
         private readonly DatabaseContext _context;
 
         /// <summary>
-        /// Конструктор контроллера Todo с инициализацией InMemory базы данных.
+        /// Constructor TodoController with initialization InMemory database.
         /// </summary>
         public TodoController()
         {
@@ -23,22 +23,22 @@ namespace note_swagger.api.Controllers
         }
 
         /// <summary>
-        /// Создать пункт задачи.
+        /// Create item
         /// </summary>
-        /// <param name="item">Модель пункта задачи.</param>
-        /// <returns>Возвращает созданный пункт задачи.</returns>
+        /// <param name="item">Model of item</param>
+        /// <returns>Return created item</returns>
         /// <remarks>
-        /// Образец запроса:
+        /// Sample request:
         /// 
         ///     POST /todo
         ///     {
         ///        "ID": 1,
-        ///        "Name": "Первая задача",
-        ///        "Description": "Простое описание"
+        ///        "Name": "First task",
+        ///        "Description": "Just description"
         ///     }
         /// </remarks>
-        /// <response code="201">Возвращает созданный пункт задачи.</response>
-        /// <response code="400">Возвращает сообщение об ошибке.</response>
+        /// <response code="201">Return created item</response>
+        /// <response code="400">Return not found message</response>
         [HttpPost("/todo")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -58,18 +58,18 @@ namespace note_swagger.api.Controllers
         }
 
         /// <summary>
-        /// Получить один пункт задач по ID.
+        /// Get one item by id
         /// </summary>
-        /// <param name="id">Идентификатор пункта задачи.</param>
-        /// <returns>Возвращает пункт задачи.</returns>
+        /// <param name="id">Item ID</param>
+        /// <returns>Return one item by id</returns>
         /// <remarks>
-        /// Образец запроса:
+        /// Sample request:
         /// 
-        /// GET /todo?id=1
+        ///     GET /todo?id=1
         /// </remarks>
-        /// <response code="200">Возвращает один пункт задачи.</response>
-        /// <response code="400">Возвращает сообщение об ошибке.</response>
-        /// <response code="404">Возвращает сообщение о не найденном пункте.</response>
+        /// <response code="200">Return one item by id</response>
+        /// <response code="400">Return exception message</response>
+        /// <response code="404">Return not found message</response>
         [HttpGet("/todo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -81,29 +81,29 @@ namespace note_swagger.api.Controllers
                 var item = _context.TodoItems.FirstOrDefault(todo => todo.ID == id);
 
                 if (item == null)
-                    return NotFound($"Пункт задачи с ID: {id} не найден.");
+                    return NotFound($"Item with ID: {id} is not found.");
 
                 return Ok(item);
             }
             catch (Exception ex)
             {
-                return BadRequest("Непредвиденная ошибка: " + ex.Message);
+                return BadRequest("Internal error: " + ex.Message);
             }
         }
 
         /// <summary>
-        /// Удалить один пункт задачи по ID.
+        /// Delete one item by ID
         /// </summary>
-        /// <param name="id">Идентификатор пункта задачи.</param>
-        /// <returns>Возвращает удаленный пункт задачи.</returns>
+        /// <param name="id">Item ID.</param>
+        /// <returns>Return deleted item</returns>
         /// <remarks>
-        /// Образец запроса:
+        /// Sample request:
         /// 
-        /// DELETE /todo?id=1
+        ///     DELETE /todo?id=1
         /// </remarks>
-        /// <response code="200">Возвращает удаленный пункт задачи.</response>
-        /// <response code="400">Возвращает сообщение об ошибке.</response>
-        /// <response code="404">Возвращает сообщение о не найденном пункте.</response> 
+        /// <response code="200">Return deleted item</response>
+        /// <response code="400">Return exception message</response>
+        /// <response code="404">Return not found message</response> 
         [HttpDelete("/todo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -115,7 +115,7 @@ namespace note_swagger.api.Controllers
                 var item = _context.TodoItems.FirstOrDefault(todo => todo.ID == id);
 
                 if (item == null)
-                    return NotFound($"Пункт задачи с ID: {id} не найден.");
+                    return NotFound($"Item with ID: {id} is not found.");
 
                 _context.TodoItems.Remove(item);
                 _context.SaveChanges();
@@ -124,28 +124,28 @@ namespace note_swagger.api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Непредвиденная ошибка: " + ex.Message);
+                return BadRequest("Internal error: " + ex.Message);
             }
         }
 
         /// <summary>
-        /// Редактировать один пункт задачи.
+        /// Update one item
         /// </summary>
-        /// <param name="newItem">Модель пункта задачи с действующим ID, но с новыми данными</param>
-        /// <returns>Возвращает измененный пункт задачи.</returns>
+        /// <param name="newItem">Item with current ID but with new data</param>
+        /// <returns>Return updated item</returns>
         /// <remarks>
-        /// Образец запроса:
+        /// Sample request:
         /// 
         ///     PUT /todo
         ///     {
         ///         "id": 1,
-        ///         "name": "Новое имя",
-        ///         "description": "Новое описание"
+        ///         "name": "New name",
+        ///         "description": "New description"
         ///     }
         /// </remarks>
-        /// <response code="200">Возвращает измененный пункт задачи.</response>
-        /// <response code="400">Возвращает сообщение об ошибке.</response>
-        /// <response code="404">Возвращает сообщение о не найденном пункте.</response>
+        /// <response code="200">Return updated item</response>
+        /// <response code="400">Return exception message</response>
+        /// <response code="404">Return not found message</response>
         [HttpPut("/todo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -157,7 +157,7 @@ namespace note_swagger.api.Controllers
                 var item = _context.TodoItems.FirstOrDefault(todo => todo.ID == newItem.ID);
 
                 if (item == null)
-                    return NotFound($"Пункт задачи с ID: {newItem.ID} не найден.");
+                    return NotFound($"Item with ID: {newItem.ID} is not found.");
 
                 item.Name = newItem.Name;
                 item.Description = newItem.Description;
@@ -168,7 +168,7 @@ namespace note_swagger.api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Непредвиденная ошибка: " + ex.Message);
+                return BadRequest("Internal error: " + ex.Message);
             }
         }
     }

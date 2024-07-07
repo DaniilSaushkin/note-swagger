@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using note_swagger.api.DTO;
 
-// Выключает все предупреждения с кодом CS1591
+// disable all warnings with CS1591 code
 #pragma warning disable CS1591
 namespace note_swagger.api.Repository
 {

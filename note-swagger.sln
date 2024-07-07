@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "note-swagger.api", "note-sw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{70A37E11-C3BF-4BD0-ABFD-0B64103852AD}"
 	ProjectSection(SolutionItems) = preProject
+		Getting started.md = Getting started.md
 		swagger.md = swagger.md
 	EndProjectSection
 EndProject

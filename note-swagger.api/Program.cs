@@ -13,10 +13,10 @@ namespace note_swagger.api
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // Добавляем Swagger в проект.
+            // Add Swagger to project
             builder.Services.AddSwaggerGen(options =>
             {
-                // Добавляем справочную информацию.
+                // Add information
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
@@ -31,22 +31,24 @@ namespace note_swagger.api
                     }
                 });
 
-                // Создаем XML-файл.
+                // Create XML-file
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             var app = builder.Build();
 
-            // Также интегрируем Swagger в проект.
+            // Also add Swagger to project
             app.UseSwagger();
-            app.UseSwaggerUI(options => // Добавляем UI Swagger в проект.
+
+            // Add Swagger UI to project
+            app.UseSwaggerUI(options =>
             {
-                // Переопределяем маршрут для swagger.json.
+                // Override path to swagger.json
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 
-                // Переопределяем маршрут для Swagger UI.
-                // Теперь он: localhost:5078/
+                // Override URL to Swagger UI.
+                // Now: localhost:5078/
                 options.RoutePrefix = string.Empty;
             });
 
